@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
-
 ## Getting Started
 
-First, run the development server:
+This is the admin panel for the project. It allows administrators to manage users, view analytics, and perform other administrative tasks.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Installation
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+To install the admin panel, follow these steps:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Clone the repository:
+   ```bash
+   git clone
+   ```
+2. Navigate to the admin directory:
+   ```bash
+   cd admin
+   ```
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
+4. Start the development server:
+   ```bash
+   npm start
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Usage
 
-## Learn More
+Once the development server is running, you can access the admin panel by navigating to `http://localhost:3000` in your web browser.
 
-To learn more about Next.js, take a look at the following resources:
+### Contributing
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+If you would like to contribute to the admin panel, please follow these steps:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix:
+   ```bash
+   git checkout -b my-feature-branch
+   ```
+3. Make your changes and commit them:
+   ```bash
+   git commit -m "Add my feature"
+   ```
+4. Push your changes to your fork:
+   ```bash
+   git push origin my-feature-branch
+   ```
+5. Create a pull request to the main repository.
 
-## Deploy on Vercel
+### Acknowledgments
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [Next.js](https://nextjs.org/) - The React framework used for building the
+  website.
+- [React](https://reactjs.org/) - The JavaScript library for building user interfaces
+- [Vercel](https://vercel.com/) - The platform for deploying the website
+- [University of Valença (UNIFAA)](https://www.unifaa.edu.br/) - The institution for which the website is being developed.
+- [Open Source Community](https://opensource.org/) - For providing the tools and resources that make projects like this possible.
