@@ -1,6 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Verifica se existe algum cookie de sessão do Supabase
@@ -8,7 +8,7 @@ export function middleware(request: NextRequest) {
   const hasAuthCookie = cookies.some(
     (cookie) =>
       cookie.name.includes("auth-token") ||
-      cookie.name.includes("sb-") && cookie.name.includes("-auth")
+      (cookie.name.includes("sb-") && cookie.name.includes("-auth"))
   );
 
   // Protege rotas /admin - redireciona para login se não autenticado
