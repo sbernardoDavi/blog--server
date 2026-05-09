@@ -2,7 +2,6 @@
 
 import { useRef, useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
-import "./Articles.css";
 
 type Article = {
   id?: string;

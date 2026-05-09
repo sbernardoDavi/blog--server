@@ -4,7 +4,6 @@ import { useEffect, useState, useCallback, useMemo } from "react";
 import { supabase } from "@/lib/supabase";
 import EventModal from "./EventModal";
 import { FaLongArrowAltDown, FaLongArrowAltUp } from "react-icons/fa";
-import "./Events.css";
 
 type Event = {
   id: string;

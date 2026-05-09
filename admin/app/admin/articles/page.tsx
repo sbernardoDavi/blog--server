@@ -5,8 +5,6 @@ import { supabase } from "@/lib/supabase";
 import ArticleModal from "./ArticleModal";
 import { FaLongArrowAltDown, FaLongArrowAltUp } from "react-icons/fa";
 
-import "./Articles.css";
-
 type Article = {
   id: string;
   tema: string;

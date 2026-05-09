@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
-import "./Videos.css";
 
 type Video = {
   id?: string;
