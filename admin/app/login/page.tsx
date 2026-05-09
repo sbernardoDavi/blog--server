@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
-import "../styles.css";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -44,9 +43,7 @@ export default function LoginPage() {
           boxShadow: "var(--shadow-modal)",
         }}
       >
-        <h1 className="text-xl font-semibold text-zinc-800">
-          LADP/UNIFAA — Admin
-        </h1>
+        <h1 className="text-xl font-semibold ">LADP/UNIFAA — Admin</h1>
 
         {error && <p className="text-sm text-red-600">{error}</p>}
 

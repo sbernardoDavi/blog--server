@@ -59,20 +59,19 @@ export default function Navbar() {
 
   return (
     <>
+      {/* Botão hamburguer — fixo no mobile, fora da navbar */}
+      <button
+        className="hamburger-btn"
+        onClick={() => setSidebarOpen(true)}
+        aria-label="Abrir menu"
+      >
+        <span />
+        <span />
+        <span />
+      </button>
+
       <nav className="navbar">
-        <div className="flex items-center gap-2">
-          <button
-            className="hamburger-btn"
-            onClick={() => setSidebarOpen(true)}
-            aria-label="Abrir menu"
-          >
-            <span />
-            <span />
-            <span />
-          </button>
-
-          <span className="ladp-gradient">LADP</span>
-
+        <div className="flex items-center">
           <div className="nav-links desktop-only">
             {NAV_LINKS.map(({ href, label }) => (
               <Link
@@ -85,8 +84,11 @@ export default function Navbar() {
             ))}
           </div>
         </div>
+        <div>
+          <span className="ladp-gradient">LADP</span>
+        </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center" style={{ gap: "5px" }}>
           <button
             onClick={toggleTheme}
             className="theme-toggle"
@@ -149,12 +151,7 @@ export default function Navbar() {
       {/* Sidebar mobile */}
       <aside className={`sidebar ${sidebarOpen ? "sidebar-open" : ""}`}>
         <div className="sidebar-header">
-          <span
-            className="font-semibold"
-            style={{ color: "var(--text-primary)" }}
-          >
-            LADP/UNIFAA
-          </span>
+          <span className="ladp-gradient">LADP</span>
           <button
             className="sidebar-close"
             onClick={() => setSidebarOpen(false)}
@@ -177,22 +174,19 @@ export default function Navbar() {
         </nav>
 
         <div className="sidebar-footer">
-          <p
-            className="text-xs truncate mb-2"
-            style={{ color: "var(--text-muted)" }}
-          >
+          <p className="truncate mb-2" style={{ color: "var(--text-muted)" }}>
             {email}
           </p>
           <button
             onClick={toggleTheme}
             className="theme-toggle w-full mb-2"
             style={{
-              border: "1px solid var(--border)",
               borderRadius: "0.5rem",
+              fontSize: "1.5rem",
             }}
             aria-label={dark ? "Ativar modo claro" : "Ativar modo escuro"}
           >
-            {dark ? "☀️ Modo claro" : "🌙 Modo escuro"}
+            {dark ? "☀️" : "🌙"}
           </button>
           <button onClick={handleLogout} className="btn btn-danger w-full">
             Sair

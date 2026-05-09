@@ -1,4 +1,5 @@
 import Navbar from "./navbar/Navbar";
+import Footer from "./footer/footer";
 
 export default function AdminLayout({
   children,
@@ -6,9 +7,13 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen" style={{ backgroundColor: "var(--bg-page)" }}>
+    <div
+      className="min-h-screen flex flex-col"
+      style={{ backgroundColor: "var(--bg-page)" }}
+    >
       <Navbar />
-      <main className="max-w-5xl mx-auto px-6 py-8">{children}</main>
+      <main style={{ padding: "2rem" }}>{children}</main>
+      <Footer />
     </div>
   );
 }

@@ -2,7 +2,7 @@
 
 import { useRef, useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
-import "./articles.css";
+import "./Articles.css";
 
 type Article = {
   id?: string;
@@ -84,7 +84,7 @@ export default function ArticleModal({ article, onClose, onSaved }: Props) {
     <div className="modal-overlay">
       <div className="modal">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold text-zinc-800">
+          <h2 className="text-lg font-semibold">
             {form.id ? "Edit Article" : "New Article"}
           </h2>
           {article?.updated_at && (
@@ -126,9 +126,7 @@ export default function ArticleModal({ article, onClose, onSaved }: Props) {
             <label className="text-xs text-zinc-500 font-medium">PDF</label>
             {savedFileName && !file && (
               <div className="flex items-center gap-2">
-                <p className="text-xs text-zinc-600">
-                  Saved PDF — {savedFileName}
-                </p>
+                <p className="text-xs ">Saved PDF — {savedFileName}</p>
                 <a
                   href={form.pdf_url}
                   target="_blank"

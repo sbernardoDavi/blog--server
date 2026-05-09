@@ -4,8 +4,7 @@ import { useEffect, useState, useCallback, useMemo } from "react";
 import { supabase } from "@/lib/supabase";
 import EventModal from "./EventModal";
 import { FaLongArrowAltDown, FaLongArrowAltUp } from "react-icons/fa";
-import "../../styles.css";
-import "./events.css";
+import "./Events.css";
 
 type Event = {
   id: string;
@@ -44,20 +43,25 @@ export default function EventsPage() {
     setLoading(false);
   }, []);
 
-  useEffect(() => { fetchEvents(); }, [fetchEvents]);
+  useEffect(() => {
+    fetchEvents();
+  }, [fetchEvents]);
 
   const sorted = useMemo(() => {
     const q = debouncedSearch.toLowerCase();
     return [...events]
-      .filter((e) =>
-        e.title.toLowerCase().includes(q) ||
-        e.speaker.toLowerCase().includes(q)
+      .filter(
+        (e) =>
+          e.title.toLowerCase().includes(q) ||
+          e.speaker.toLowerCase().includes(q),
       )
       .sort((a, b) => {
-      const valA = sortField === "date" ? a.date : (a.time ?? "");
-      const valB = sortField === "date" ? b.date : (b.time ?? "");
-      return sortOrder === "asc" ? valA.localeCompare(valB) : valB.localeCompare(valA);
-    });
+        const valA = sortField === "date" ? a.date : (a.time ?? "");
+        const valB = sortField === "date" ? b.date : (b.time ?? "");
+        return sortOrder === "asc"
+          ? valA.localeCompare(valB)
+          : valB.localeCompare(valA);
+      });
   }, [events, sortField, sortOrder]);
 
   function toggleSort(field: SortField) {
@@ -69,8 +73,14 @@ export default function EventsPage() {
     }
   }
 
-  function openCreate() { setSelected(null); setModalOpen(true); }
-  function openEdit(event: Event) { setSelected(event); setModalOpen(true); }
+  function openCreate() {
+    setSelected(null);
+    setModalOpen(true);
+  }
+  function openEdit(event: Event) {
+    setSelected(event);
+    setModalOpen(true);
+  }
 
   async function handleDelete(id: string) {
     if (!confirm("Delete this event?")) return;
@@ -78,17 +88,26 @@ export default function EventsPage() {
     fetchEvents();
   }
 
-  function handleSaved() { setModalOpen(false); fetchEvents(); }
+  function handleSaved() {
+    setModalOpen(false);
+    fetchEvents();
+  }
 
   const SortIcon = ({ field }: { field: SortField }) =>
-    sortField === field
-      ? sortOrder === "asc" ? <FaLongArrowAltUp size={12} /> : <FaLongArrowAltDown size={12} />
-      : <FaLongArrowAltDown size={12} style={{ opacity: 0.3 }} />;
+    sortField === field ? (
+      sortOrder === "asc" ? (
+        <FaLongArrowAltUp size={12} />
+      ) : (
+        <FaLongArrowAltDown size={12} />
+      )
+    ) : (
+      <FaLongArrowAltDown size={12} style={{ opacity: 0.3 }} />
+    );
 
   return (
     <div>
       <div className="page-header">
-        <h1 className="text-xl font-semibold text-zinc-800">Events</h1>
+        <h1 className="text-xl font-semibold ">Events</h1>
         <div className="flex gap-2 flex-wrap">
           <input
             type="text"
@@ -98,7 +117,9 @@ export default function EventsPage() {
             className="input"
             style={{ width: "220px" }}
           />
-          <button onClick={openCreate} className="btn btn-primary">+ New Event</button>
+          <button onClick={openCreate} className="btn btn-primary">
+            + New Event
+          </button>
         </div>
       </div>
 
@@ -117,12 +138,18 @@ export default function EventsPage() {
               <th>Title</th>
               <th>Speaker</th>
               <th>
-                <button onClick={() => toggleSort("date")} className="flex items-center gap-1 hover:text-zinc-800 transition-colors">
+                <button
+                  onClick={() => toggleSort("date")}
+                  className="flex items-center gap-1 hover: transition-colors"
+                >
                   Date <SortIcon field="date" />
                 </button>
               </th>
               <th>
-                <button onClick={() => toggleSort("time")} className="flex items-center gap-1 hover:text-zinc-800 transition-colors">
+                <button
+                  onClick={() => toggleSort("time")}
+                  className="flex items-center gap-1 hover: transition-colors"
+                >
                   Time <SortIcon field="time" />
                 </button>
               </th>
@@ -133,29 +160,46 @@ export default function EventsPage() {
           <tbody>
             {loading && (
               <tr>
-                <td colSpan={6} className="text-center text-zinc-400 py-6">Loading...</td>
+                <td colSpan={6} className="text-center text-zinc-400 py-6">
+                  Loading...
+                </td>
               </tr>
             )}
-            {!loading && sorted.map((event) => (
-              <tr key={event.id}>
-                <td className="font-medium text-zinc-800">{event.title}</td>
-                <td className="text-zinc-600">{event.speaker}</td>
-                <td className="text-zinc-600">
-                  {new Date(event.date + "T00:00:00").toLocaleDateString("pt-BR")}
-                </td>
-                <td className="text-zinc-600">{event.time}</td>
-                <td className="text-zinc-600">{event.location}</td>
-                <td>
-                  <div className="flex gap-2">
-                    <button onClick={() => openEdit(event)} className="btn btn-ghost px-2 py-1 text-xs">Edit</button>
-                    <button onClick={() => handleDelete(event.id)} className="btn btn-danger px-2 py-1 text-xs">Delete</button>
-                  </div>
-                </td>
-              </tr>
-            ))}
+            {!loading &&
+              sorted.map((event) => (
+                <tr key={event.id}>
+                  <td className="font-medium ">{event.title}</td>
+                  <td className="">{event.speaker}</td>
+                  <td className="">
+                    {new Date(event.date + "T00:00:00").toLocaleDateString(
+                      "pt-BR",
+                    )}
+                  </td>
+                  <td className="">{event.time}</td>
+                  <td className="">{event.location}</td>
+                  <td>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => openEdit(event)}
+                        className="btn btn-ghost px-2 py-1 text-xs"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        onClick={() => handleDelete(event.id)}
+                        className="btn btn-danger px-2 py-1 text-xs"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
             {!loading && !sorted.length && (
               <tr>
-                <td colSpan={6} className="text-center text-zinc-400 py-6">{debouncedSearch ? "No results found." : "No events found."}</td>
+                <td colSpan={6} className="text-center text-zinc-400 py-6">
+                  {debouncedSearch ? "No results found." : "No events found."}
+                </td>
               </tr>
             )}
           </tbody>

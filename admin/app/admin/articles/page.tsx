@@ -4,8 +4,8 @@ import { useEffect, useState, useCallback, useMemo } from "react";
 import { supabase } from "@/lib/supabase";
 import ArticleModal from "./ArticleModal";
 import { FaLongArrowAltDown, FaLongArrowAltUp } from "react-icons/fa";
-import "../../styles.css";
-import "./articles.css";
+
+import "./Articles.css";
 
 type Article = {
   id: string;
@@ -80,11 +80,10 @@ export default function ArticlesPage() {
   function toggleSort() {
     setSortOrder((prev) => (prev === "desc" ? "asc" : "desc"));
   }
-
   return (
     <div>
       <div className="page-header">
-        <h1 className="text-xl font-semibold text-zinc-800">Articles</h1>
+        <h1 className="text-xl font-semibold">Articles</h1>
         <div className="flex gap-2 flex-wrap">
           <input
             type="text"
@@ -117,7 +116,7 @@ export default function ArticlesPage() {
               <th>
                 <button
                   onClick={toggleSort}
-                  className="flex items-center gap-1 hover:text-zinc-800 transition-colors"
+                  className="flex items-center gap-1 hover: transition-colors"
                 >
                   Date{" "}
                   {sortOrder === "desc" ? (
@@ -141,8 +140,8 @@ export default function ArticlesPage() {
             {!loading &&
               filtered.map((article) => (
                 <tr key={article.id}>
-                  <td className="font-medium text-zinc-800">{article.tema}</td>
-                  <td className="text-zinc-600">{article.autor}</td>
+                  <td className="font-medium ">{article.tema}</td>
+                  <td className="">{article.autor}</td>
                   <td className="text-zinc-500">
                     {new Date(article.created_at).toLocaleDateString("pt-BR")}
                   </td>

@@ -2,8 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
-import "../../styles.css";
-import "./videos.css";
+import "./Videos.css";
 
 type Video = {
   id?: string;
@@ -26,9 +25,13 @@ export default function VideoModal({ video, onClose, onSaved }: Props) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  useEffect(() => { setForm(video ?? empty); }, [video]);
+  useEffect(() => {
+    setForm(video ?? empty);
+  }, [video]);
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+  function handleChange(
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   }
 
@@ -39,7 +42,10 @@ export default function VideoModal({ video, onClose, onSaved }: Props) {
 
     const { id, ...data } = form;
     const query = id
-      ? supabase.from("videos").update({ ...data, updated_at: new Date().toISOString() }).eq("id", id)
+      ? supabase
+          .from("videos")
+          .update({ ...data, updated_at: new Date().toISOString() })
+          .eq("id", id)
       : supabase.from("videos").insert(data);
 
     const { error } = await query;
@@ -56,7 +62,7 @@ export default function VideoModal({ video, onClose, onSaved }: Props) {
     <div className="modal-overlay">
       <div className="modal">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold text-zinc-800">
+          <h2 className="text-lg font-semibold ">
             {form.id ? "Edit Video" : "New Video"}
           </h2>
           {video?.updated_at && (
@@ -69,13 +75,40 @@ export default function VideoModal({ video, onClose, onSaved }: Props) {
         {error && <p className="text-sm text-red-600 mb-3">{error}</p>}
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-          <input name="titulo" placeholder="Title" value={form.titulo} onChange={handleChange} required className="input" />
-          <textarea name="conteudo" placeholder="Content" value={form.conteudo} onChange={handleChange} rows={4} className="input resize-none" />
-          <input name="url" placeholder="Video URL" value={form.url} onChange={handleChange} required className="input" />
+          <input
+            name="titulo"
+            placeholder="Title"
+            value={form.titulo}
+            onChange={handleChange}
+            required
+            className="input"
+          />
+          <textarea
+            name="conteudo"
+            placeholder="Content"
+            value={form.conteudo}
+            onChange={handleChange}
+            rows={4}
+            className="input resize-none"
+          />
+          <input
+            name="url"
+            placeholder="Video URL"
+            value={form.url}
+            onChange={handleChange}
+            required
+            className="input"
+          />
 
           <div className="flex justify-end gap-2 mt-2">
-            <button type="button" onClick={onClose} className="btn btn-ghost">Cancel</button>
-            <button type="submit" disabled={loading} className="btn btn-primary">
+            <button type="button" onClick={onClose} className="btn btn-ghost">
+              Cancel
+            </button>
+            <button
+              type="submit"
+              disabled={loading}
+              className="btn btn-primary"
+            >
               {loading ? "Saving..." : "Save"}
             </button>
           </div>
