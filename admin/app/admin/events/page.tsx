@@ -5,6 +5,7 @@ import { supabase } from "@/lib/supabase";
 import EventModal from "./EventModal";
 import { FaLongArrowAltDown, FaLongArrowAltUp } from "react-icons/fa";
 import "../../styles.css";
+import "./events.css";
 
 type Event = {
   id: string;

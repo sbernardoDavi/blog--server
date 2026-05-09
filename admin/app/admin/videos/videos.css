@@ -1,0 +1,94 @@
+/* ─── Videos page & modal ───────────────────────────────────── */
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  border-radius: 0.75rem;
+  border: 1px solid var(--border);
+  background: var(--bg-surface);
+  -webkit-overflow-scrolling: touch;
+}
+
+table {
+  width: 100%;
+  font-size: 0.875rem;
+  border-collapse: collapse;
+}
+thead { background-color: var(--bg-subtle); }
+th {
+  padding: 0.75rem 1rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-align: left;
+  white-space: nowrap;
+}
+td {
+  padding: 0.75rem 1rem;
+  border-top: 1px solid var(--border-subtle);
+}
+tbody tr:hover { background-color: var(--bg-subtle); }
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 1rem;
+}
+
+.modal {
+  background: var(--bg-surface);
+  border-radius: 0.75rem;
+  box-shadow: var(--shadow-modal);
+  width: 50%;
+  padding: 1.5rem;
+  max-height: 90vh;
+  overflow-y: auto;
+  color: var(--text-primary);
+}
+
+/* ─── Mobile ────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .page-header > div { width: 100%; }
+  .page-header input.input {
+    width: 100% !important;
+    flex: 1;
+  }
+  .page-header .btn-primary { width: 100%; }
+
+  th, td {
+    padding: 0.625rem 0.75rem;
+    font-size: 0.8rem;
+  }
+
+  .modal {
+    width: 100% !important;
+    max-width: 100% !important;
+    border-radius: 1rem 1rem 0 0 !important;
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    max-height: 92dvh !important;
+    padding: 1.25rem !important;
+    margin: 0 !important;
+  }
+  .modal-overlay {
+    align-items: flex-end;
+    padding: 0;
+  }
+}

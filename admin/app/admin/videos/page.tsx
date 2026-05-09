@@ -5,6 +5,7 @@ import { supabase } from "@/lib/supabase";
 import VideoModal from "./VideoModal";
 import { FaLongArrowAltDown, FaLongArrowAltUp } from "react-icons/fa";
 import "../../styles.css";
+import "./videos.css";
 
 type Video = {
   id: string;

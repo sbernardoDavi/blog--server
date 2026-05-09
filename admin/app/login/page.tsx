@@ -31,10 +31,18 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-zinc-100 px-4">
+    <div
+      className="min-h-screen flex items-center justify-center px-4"
+      style={{ backgroundColor: "var(--bg-page)" }}
+    >
       <form
         onSubmit={handleSubmit}
-        className="bg-white p-8 rounded-xl shadow w-full max-w-sm flex flex-col gap-4"
+        className="p-8 rounded-xl shadow w-full max-w-sm flex flex-col gap-4"
+        style={{
+          backgroundColor: "var(--bg-surface)",
+          color: "var(--text-primary)",
+          boxShadow: "var(--shadow-modal)",
+        }}
       >
         <h1 className="text-xl font-semibold text-zinc-800">
           LADP/UNIFAA — Admin
