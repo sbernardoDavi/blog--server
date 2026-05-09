@@ -45,20 +45,19 @@
   width: 2rem;
   height: 2rem;
   border-radius: 0.5rem;
-  background: transparent;
-  border: none;
+  /* background: transparent;
+  border: none; */
   cursor: pointer;
-  color: var(--text-nav);
-  font-size: 1rem;
-  transition:
+  /* color: var(--text-nav); */
+  font-size: 1.5rem;
+  /* transition:
     background-color 0.2s ease,
     color 0.2s ease,
-    transform 0.15s ease;
+    transform 0.15s ease; */
   flex-shrink: 0;
 }
 .theme-toggle:hover {
   transform: translateY(-2px);
-  background-color: var(--bg-hover);
 }
 
 /* ─── Hamburguer ────────────────────────────────────────────── */

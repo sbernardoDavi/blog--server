@@ -84,11 +84,11 @@ export default function Navbar() {
             ))}
           </div>
         </div>
-        <div>
+        {/* <div>
           <span className="ladp-gradient">LADP</span>
-        </div>
+        </div> */}
 
-        <div className="flex items-center" style={{ gap: "5px" }}>
+        <div className="flex items-center" style={{ gap: "10px" }}>
           <button
             onClick={toggleTheme}
             className="theme-toggle"
@@ -151,7 +151,12 @@ export default function Navbar() {
       {/* Sidebar mobile */}
       <aside className={`sidebar ${sidebarOpen ? "sidebar-open" : ""}`}>
         <div className="sidebar-header">
-          <span className="ladp-gradient">LADP</span>
+          <span
+            className="ladp-gradient-footer"
+            style={{ fontSize: "1.5rem", fontWeight: "700" }}
+          >
+            LADP
+          </span>
           <button
             className="sidebar-close"
             onClick={() => setSidebarOpen(false)}
@@ -172,22 +177,31 @@ export default function Navbar() {
             </Link>
           ))}
         </nav>
-
-        <div className="sidebar-footer">
-          <p className="truncate mb-2" style={{ color: "var(--text-muted)" }}>
-            {email}
-          </p>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            marginBottom: "1rem",
+          }}
+        >
           <button
             onClick={toggleTheme}
-            className="theme-toggle w-full mb-2"
+            className="theme-toggle"
             style={{
               borderRadius: "0.5rem",
-              fontSize: "1.5rem",
+              fontSize: "2rem",
             }}
             aria-label={dark ? "Ativar modo claro" : "Ativar modo escuro"}
           >
             {dark ? "☀️" : "🌙"}
           </button>
+        </div>
+
+        <div className="sidebar-footer">
+          <p className="truncate mb-2" style={{ color: "var(--text-muted)" }}>
+            {email}
+          </p>
           <button onClick={handleLogout} className="btn btn-danger w-full">
             Sair
           </button>

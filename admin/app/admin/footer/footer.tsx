@@ -10,7 +10,7 @@ export default function Footer() {
           <h2 className="footer-ladp">
             <span className="ladp-gradient-footer ">LADP</span>
           </h2>
-          <p className="footer-subtitle">LIGA ACADÊMICA DE DIREITO PÚBLICO</p>
+          {/* <p className="footer-subtitle">LIGA ACADÊMICA DE DIREITO PÚBLICO</p> */}
         </div>
 
         <p className="footer-dev">
