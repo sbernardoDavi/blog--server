@@ -2,8 +2,8 @@
 
 import { useEffect, useState, useCallback, useMemo } from "react";
 import { supabase } from "@/lib/supabase";
-import EventModal from "./EventModal";
-import DeleteConfirmModal from "../components/DeleteConfirmModal";
+import EventModal from "./event-modal";
+import DeleteConfirmModal from "../components/delete-confirm-modal";
 import { FaLongArrowAltDown, FaLongArrowAltUp } from "react-icons/fa";
 
 type Event = {

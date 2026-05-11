@@ -2,8 +2,8 @@
 
 import { useEffect, useState, useCallback, useMemo } from "react";
 import { supabase } from "@/lib/supabase";
-import ArticleModal from "./ArticleModal";
-import DeleteConfirmModal from "../components/DeleteConfirmModal";
+import ArticleModal from "./article-modal";
+import DeleteConfirmModal from "../components/delete-confirm-modal";
 import { FaLongArrowAltDown, FaLongArrowAltUp } from "react-icons/fa";
 
 type Article = {

@@ -2,8 +2,8 @@
 
 import { useEffect, useState, useCallback, useMemo } from "react";
 import { supabase } from "@/lib/supabase";
-import VideoModal from "./VideoModal";
-import DeleteConfirmModal from "../components/DeleteConfirmModal";
+import VideoModal from "./video-modal";
+import DeleteConfirmModal from "../components/delete-confirm-modal";
 import { FaLongArrowAltDown, FaLongArrowAltUp } from "react-icons/fa";
 
 type Video = {
