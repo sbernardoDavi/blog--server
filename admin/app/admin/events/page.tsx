@@ -5,21 +5,7 @@ import { supabase } from "@/lib/supabase";
 import EventModal from "./event-modal";
 import DeleteConfirmModal from "../components/delete-confirm-modal";
 import { FaLongArrowAltDown, FaLongArrowAltUp } from "react-icons/fa";
-
-type Event = {
-  id: string;
-  title: string;
-  date: string;
-  time: string;
-  description: string;
-  location: string;
-  speaker: string;
-  created_at: string;
-  updated_at?: string;
-};
-
-type SortField = "date" | "time";
-type SortOrder = "asc" | "desc";
+import type { Event, SortField, SortOrder } from "@/app/types";
 
 export default function EventsPage() {
   const [events, setEvents] = useState<Event[]>([]);

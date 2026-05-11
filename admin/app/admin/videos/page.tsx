@@ -5,20 +5,10 @@ import { supabase } from "@/lib/supabase";
 import VideoModal from "./video-modal";
 import DeleteConfirmModal from "../components/delete-confirm-modal";
 import { FaLongArrowAltDown, FaLongArrowAltUp } from "react-icons/fa";
-
-type Video = {
-  id: string;
-  titulo: string;
-  conteudo: string;
-  url: string;
-  created_at: string;
-  updated_at?: string;
-};
-
-type SortOrder = "asc" | "desc";
+import type { Video, VideoWithDates, SortOrder } from "@/app/types";
 
 export default function VideosPage() {
-  const [videos, setVideos] = useState<Video[]>([]);
+  const [videos, setVideos] = useState<VideoWithDates[]>([]);
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
   const [selected, setSelected] = useState<Video | null>(null);
@@ -26,7 +16,9 @@ export default function VideosPage() {
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [sortOrder, setSortOrder] = useState<SortOrder>("desc");
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-  const [videoToDelete, setVideoToDelete] = useState<Video | null>(null);
+  const [videoToDelete, setVideoToDelete] = useState<VideoWithDates | null>(
+    null,
+  );
 
   useEffect(() => {
     const timer = setTimeout(() => setDebouncedSearch(search), 300);
@@ -65,12 +57,12 @@ export default function VideosPage() {
     setSelected(null);
     setModalOpen(true);
   }
-  function openEdit(video: Video) {
+  function openEdit(video: VideoWithDates) {
     setSelected(video);
     setModalOpen(true);
   }
 
-  function openDeleteModal(video: Video) {
+  function openDeleteModal(video: VideoWithDates) {
     setVideoToDelete(video);
     setDeleteModalOpen(true);
   }

@@ -5,21 +5,10 @@ import { supabase } from "@/lib/supabase";
 import ArticleModal from "./article-modal";
 import DeleteConfirmModal from "../components/delete-confirm-modal";
 import { FaLongArrowAltDown, FaLongArrowAltUp } from "react-icons/fa";
-
-type Article = {
-  id: string;
-  tema: string;
-  autor: string;
-  resumo: string;
-  pdf_url?: string;
-  created_at: string;
-  updated_at?: string;
-};
-
-type SortOrder = "desc" | "asc";
+import type { Article, ArticleWithDates, SortOrder } from "@/app/types";
 
 export default function ArticlesPage() {
-  const [articles, setArticles] = useState<Article[]>([]);
+  const [articles, setArticles] = useState<ArticleWithDates[]>([]);
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
   const [selected, setSelected] = useState<Article | null>(null);
@@ -27,7 +16,8 @@ export default function ArticlesPage() {
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [sortOrder, setSortOrder] = useState<SortOrder>("desc");
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-  const [articleToDelete, setArticleToDelete] = useState<Article | null>(null);
+  const [articleToDelete, setArticleToDelete] =
+    useState<ArticleWithDates | null>(null);
 
   useEffect(() => {
     const timer = setTimeout(() => setDebouncedSearch(search), 300);
@@ -63,12 +53,12 @@ export default function ArticlesPage() {
     setSelected(null);
     setModalOpen(true);
   }
-  function openEdit(article: Article) {
+  function openEdit(article: ArticleWithDates) {
     setSelected(article);
     setModalOpen(true);
   }
 
-  function openDeleteModal(article: Article) {
+  function openDeleteModal(article: ArticleWithDates) {
     setArticleToDelete(article);
     setDeleteModalOpen(true);
   }

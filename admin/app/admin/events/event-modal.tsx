@@ -2,23 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
-
-type Event = {
-  id?: string;
-  title: string;
-  date: string;
-  time: string;
-  description: string;
-  location: string;
-  speaker: string;
-  updated_at?: string;
-};
-
-type Props = {
-  event?: Event | null;
-  onClose: () => void;
-  onSaved: () => void;
-};
+import type { Event, EventModalProps } from "@/app/types";
 
 const empty: Event = {
   title: "",
@@ -29,7 +13,11 @@ const empty: Event = {
   speaker: "",
 };
 
-export default function EventModal({ event, onClose, onSaved }: Props) {
+export default function EventModal({
+  event,
+  onClose,
+  onSaved,
+}: EventModalProps) {
   const [form, setForm] = useState<Event>(empty);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");

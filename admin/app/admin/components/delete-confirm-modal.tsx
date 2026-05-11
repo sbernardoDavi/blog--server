@@ -1,14 +1,7 @@
 "use client";
 
 import { useState } from "react";
-
-type DeleteConfirmModalProps = {
-  isOpen: boolean;
-  itemName: string;
-  itemType: string;
-  onConfirm: () => void;
-  onCancel: () => void;
-};
+import type { DeleteConfirmModalProps } from "@/app/types";
 
 export default function DeleteConfirmModal({
   isOpen,

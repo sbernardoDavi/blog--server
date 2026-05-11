@@ -2,25 +2,15 @@
 
 import { useRef, useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
-
-type Article = {
-  id?: string;
-  tema: string;
-  autor: string;
-  resumo: string;
-  pdf_url?: string;
-  updated_at?: string;
-};
-
-type Props = {
-  article?: Article | null;
-  onClose: () => void;
-  onSaved: () => void;
-};
+import type { Article, ArticleModalProps } from "@/app/types";
 
 const empty: Article = { tema: "", autor: "", resumo: "", pdf_url: "" };
 
-export default function ArticleModal({ article, onClose, onSaved }: Props) {
+export default function ArticleModal({
+  article,
+  onClose,
+  onSaved,
+}: ArticleModalProps) {
   const [form, setForm] = useState<Article>(empty);
   const [file, setFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);

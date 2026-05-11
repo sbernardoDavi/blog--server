@@ -2,24 +2,15 @@
 
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
-
-type Video = {
-  id?: string;
-  titulo: string;
-  conteudo: string;
-  url: string;
-  updated_at?: string;
-};
-
-type Props = {
-  video?: Video | null;
-  onClose: () => void;
-  onSaved: () => void;
-};
+import type { Video, VideoModalProps } from "@/app/types";
 
 const empty: Video = { titulo: "", conteudo: "", url: "" };
 
-export default function VideoModal({ video, onClose, onSaved }: Props) {
+export default function VideoModal({
+  video,
+  onClose,
+  onSaved,
+}: VideoModalProps) {
   const [form, setForm] = useState<Video>(empty);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
