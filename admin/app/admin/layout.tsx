@@ -13,7 +13,6 @@ export default function AdminLayout({
     >
       <Navbar />
       <main style={{ padding: "2rem" }}>{children}</main>
-      <Footer />
     </div>
   );
 }

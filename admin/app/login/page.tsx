@@ -32,7 +32,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="form-section">
+    <section className="form-section" aria-label="Login">
       <form
         onSubmit={handleSubmit}
         className="container"
@@ -122,6 +122,6 @@ export default function LoginPage() {
           {loading ? "Entrando..." : "Entrar"}
         </button>
       </form>
-    </div>
+    </section>
   );
 }

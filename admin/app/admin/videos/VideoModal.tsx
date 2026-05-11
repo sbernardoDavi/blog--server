@@ -58,18 +58,23 @@ export default function VideoModal({ video, onClose, onSaved }: Props) {
   }
 
   return (
-    <div className="modal-overlay">
-      <div className="modal">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold ">
+    <div
+      className="modal-overlay"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="video-modal-title"
+    >
+      <article className="modal">
+        <header className="flex items-center justify-between mb-4">
+          <h2 id="video-modal-title" className="text-lg font-semibold ">
             {form.id ? "Edit Video" : "New Video"}
           </h2>
           {video?.updated_at && (
-            <span className="text-xs text-zinc-400">
+            <time className="text-xs text-zinc-400" dateTime={video.updated_at}>
               Edited {new Date(video.updated_at).toLocaleDateString("pt-BR")}
-            </span>
+            </time>
           )}
-        </div>
+        </header>
 
         {error && <p className="text-sm text-red-600 mb-3">{error}</p>}
 
@@ -112,7 +117,7 @@ export default function VideoModal({ video, onClose, onSaved }: Props) {
             </button>
           </div>
         </form>
-      </div>
+      </article>
     </div>
   );
 }

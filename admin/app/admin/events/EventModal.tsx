@@ -68,18 +68,23 @@ export default function EventModal({ event, onClose, onSaved }: Props) {
   }
 
   return (
-    <div className="modal-overlay">
-      <div className="modal">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold ">
+    <div
+      className="modal-overlay"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="event-modal-title"
+    >
+      <article className="modal">
+        <header className="flex items-center justify-between mb-4">
+          <h2 id="event-modal-title" className="text-lg font-semibold ">
             {form.id ? "Edit Event" : "New Event"}
           </h2>
           {event?.updated_at && (
-            <span className="text-xs text-zinc-400">
+            <time className="text-xs text-zinc-400" dateTime={event.updated_at}>
               Edited {new Date(event.updated_at).toLocaleDateString("pt-BR")}
-            </span>
+            </time>
           )}
-        </div>
+        </header>
 
         {error && <p className="text-sm text-red-600 mb-3">{error}</p>}
 
@@ -128,7 +133,7 @@ export default function EventModal({ event, onClose, onSaved }: Props) {
             placeholder="Description"
             value={form.description}
             onChange={handleChange}
-            rows={4}
+            rows={10}
             className="input resize-none"
           />
 
@@ -145,7 +150,7 @@ export default function EventModal({ event, onClose, onSaved }: Props) {
             </button>
           </div>
         </form>
-      </div>
+      </article>
     </div>
   );
 }

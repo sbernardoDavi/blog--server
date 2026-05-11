@@ -70,7 +70,7 @@ export default function Navbar() {
         <span />
       </button>
 
-      <nav className="navbar">
+      <nav className="navbar" role="navigation" aria-label="Main navigation">
         <div className="flex items-center">
           <div className="nav-links desktop-only">
             {NAV_LINKS.map(({ href, label }) => (
@@ -149,7 +149,11 @@ export default function Navbar() {
       )}
 
       {/* Sidebar mobile */}
-      <aside className={`sidebar ${sidebarOpen ? "sidebar-open" : ""}`}>
+      <aside
+        className={`sidebar ${sidebarOpen ? "sidebar-open" : ""}`}
+        role="navigation"
+        aria-label="Mobile navigation"
+      >
         <div className="sidebar-header">
           <span
             className="ladp-gradient-footer"

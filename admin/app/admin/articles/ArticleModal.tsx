@@ -80,18 +80,26 @@ export default function ArticleModal({ article, onClose, onSaved }: Props) {
     : null;
 
   return (
-    <div className="modal-overlay">
-      <div className="modal">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold">
+    <div
+      className="modal-overlay"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="article-modal-title"
+    >
+      <article className="modal">
+        <header className="flex items-center justify-between mb-4">
+          <h2 id="article-modal-title" className="text-lg font-semibold">
             {form.id ? "Edit Article" : "New Article"}
           </h2>
           {article?.updated_at && (
-            <span className="text-xs text-zinc-400">
+            <time
+              className="text-xs text-zinc-400"
+              dateTime={article.updated_at}
+            >
               Edited {new Date(article.updated_at).toLocaleDateString("pt-BR")}
-            </span>
+            </time>
           )}
-        </div>
+        </header>
 
         {error && <p className="text-sm text-red-600 mb-3">{error}</p>}
 
@@ -117,7 +125,7 @@ export default function ArticleModal({ article, onClose, onSaved }: Props) {
             placeholder="Summary"
             value={form.resumo}
             onChange={handleChange}
-            rows={4}
+            rows={10}
             className="input resize-none"
           />
 
@@ -165,7 +173,7 @@ export default function ArticleModal({ article, onClose, onSaved }: Props) {
             </button>
           </div>
         </form>
-      </div>
+      </article>
     </div>
   );
 }

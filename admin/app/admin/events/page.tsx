@@ -104,10 +104,10 @@ export default function EventsPage() {
     );
 
   return (
-    <div>
-      <div className="page-header">
+    <main>
+      <header className="page-header">
         <h1 className="text-xl font-semibold ">Events</h1>
-        <div className="flex gap-2 flex-wrap">
+        <nav className="flex gap-2 flex-wrap" aria-label="Event controls">
           <input
             type="text"
             placeholder="Search by title or speaker..."
@@ -119,8 +119,8 @@ export default function EventsPage() {
           <button onClick={openCreate} className="btn btn-primary">
             + New Event
           </button>
-        </div>
-      </div>
+        </nav>
+      </header>
 
       {modalOpen && (
         <EventModal
@@ -130,7 +130,7 @@ export default function EventsPage() {
         />
       )}
 
-      <div className="table-wrapper">
+      <section className="table-wrapper" aria-label="Events list">
         <table>
           <thead>
             <tr>
@@ -203,7 +203,7 @@ export default function EventsPage() {
             )}
           </tbody>
         </table>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 }

@@ -4,7 +4,7 @@ import "./footer.css";
 
 export default function Footer() {
   return (
-    <footer className="footer" id="footer">
+    <footer className="footer" id="footer" role="contentinfo">
       <div className="footer-content">
         <div className="footer-text">
           <h2 className="footer-ladp">
