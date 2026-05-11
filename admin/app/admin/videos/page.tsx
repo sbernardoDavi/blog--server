@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback, useMemo } from "react";
 import { supabase } from "@/lib/supabase";
 import VideoModal from "./VideoModal";
+import DeleteConfirmModal from "../components/DeleteConfirmModal";
 import { FaLongArrowAltDown, FaLongArrowAltUp } from "react-icons/fa";
 
 type Video = {
@@ -24,6 +25,8 @@ export default function VideosPage() {
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [sortOrder, setSortOrder] = useState<SortOrder>("desc");
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [videoToDelete, setVideoToDelete] = useState<Video | null>(null);
 
   useEffect(() => {
     const timer = setTimeout(() => setDebouncedSearch(search), 300);
@@ -67,9 +70,16 @@ export default function VideosPage() {
     setModalOpen(true);
   }
 
-  async function handleDelete(id: string) {
-    if (!confirm("Delete this video?")) return;
-    await supabase.from("videos").delete().eq("id", id);
+  function openDeleteModal(video: Video) {
+    setVideoToDelete(video);
+    setDeleteModalOpen(true);
+  }
+
+  async function handleDelete() {
+    if (!videoToDelete) return;
+    await supabase.from("videos").delete().eq("id", videoToDelete.id);
+    setDeleteModalOpen(false);
+    setVideoToDelete(null);
     fetchVideos();
   }
 
@@ -104,6 +114,17 @@ export default function VideosPage() {
           onSaved={handleSaved}
         />
       )}
+
+      <DeleteConfirmModal
+        isOpen={deleteModalOpen}
+        itemName={videoToDelete?.titulo || ""}
+        itemType="video"
+        onConfirm={handleDelete}
+        onCancel={() => {
+          setDeleteModalOpen(false);
+          setVideoToDelete(null);
+        }}
+      />
 
       <section className="table-wrapper" aria-label="Videos list">
         <table>
@@ -161,7 +182,7 @@ export default function VideosPage() {
                         Edit
                       </button>
                       <button
-                        onClick={() => handleDelete(video.id)}
+                        onClick={() => openDeleteModal(video)}
                         className="btn btn-danger px-2 py-1 text-xs"
                       >
                         Delete

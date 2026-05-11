@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback, useMemo } from "react";
 import { supabase } from "@/lib/supabase";
 import EventModal from "./EventModal";
+import DeleteConfirmModal from "../components/DeleteConfirmModal";
 import { FaLongArrowAltDown, FaLongArrowAltUp } from "react-icons/fa";
 
 type Event = {
@@ -29,6 +30,8 @@ export default function EventsPage() {
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [sortField, setSortField] = useState<SortField>("date");
   const [sortOrder, setSortOrder] = useState<SortOrder>("asc");
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [eventToDelete, setEventToDelete] = useState<Event | null>(null);
 
   useEffect(() => {
     const timer = setTimeout(() => setDebouncedSearch(search), 300);
@@ -81,9 +84,16 @@ export default function EventsPage() {
     setModalOpen(true);
   }
 
-  async function handleDelete(id: string) {
-    if (!confirm("Delete this event?")) return;
-    await supabase.from("eventos").delete().eq("id", id);
+  function openDeleteModal(event: Event) {
+    setEventToDelete(event);
+    setDeleteModalOpen(true);
+  }
+
+  async function handleDelete() {
+    if (!eventToDelete) return;
+    await supabase.from("eventos").delete().eq("id", eventToDelete.id);
+    setDeleteModalOpen(false);
+    setEventToDelete(null);
     fetchEvents();
   }
 
@@ -129,6 +139,17 @@ export default function EventsPage() {
           onSaved={handleSaved}
         />
       )}
+
+      <DeleteConfirmModal
+        isOpen={deleteModalOpen}
+        itemName={eventToDelete?.title || ""}
+        itemType="event"
+        onConfirm={handleDelete}
+        onCancel={() => {
+          setDeleteModalOpen(false);
+          setEventToDelete(null);
+        }}
+      />
 
       <section className="table-wrapper" aria-label="Events list">
         <table>
@@ -185,7 +206,7 @@ export default function EventsPage() {
                         Edit
                       </button>
                       <button
-                        onClick={() => handleDelete(event.id)}
+                        onClick={() => openDeleteModal(event)}
                         className="btn btn-danger px-2 py-1 text-xs"
                       >
                         Delete

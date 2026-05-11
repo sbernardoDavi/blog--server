@@ -1,6 +1,6 @@
 "use client";
 
-import "./footer.css";
+import "./Footer.css";
 
 export default function Footer() {
   return (

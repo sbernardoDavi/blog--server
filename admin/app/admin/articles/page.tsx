@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback, useMemo } from "react";
 import { supabase } from "@/lib/supabase";
 import ArticleModal from "./ArticleModal";
+import DeleteConfirmModal from "../components/DeleteConfirmModal";
 import { FaLongArrowAltDown, FaLongArrowAltUp } from "react-icons/fa";
 
 type Article = {
@@ -25,6 +26,8 @@ export default function ArticlesPage() {
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [sortOrder, setSortOrder] = useState<SortOrder>("desc");
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [articleToDelete, setArticleToDelete] = useState<Article | null>(null);
 
   useEffect(() => {
     const timer = setTimeout(() => setDebouncedSearch(search), 300);
@@ -65,9 +68,16 @@ export default function ArticlesPage() {
     setModalOpen(true);
   }
 
-  async function handleDelete(id: string) {
-    if (!confirm("Deletar este artigo?")) return;
-    await supabase.from("artigos").delete().eq("id", id);
+  function openDeleteModal(article: Article) {
+    setArticleToDelete(article);
+    setDeleteModalOpen(true);
+  }
+
+  async function handleDelete() {
+    if (!articleToDelete) return;
+    await supabase.from("artigos").delete().eq("id", articleToDelete.id);
+    setDeleteModalOpen(false);
+    setArticleToDelete(null);
     fetchArticles();
   }
 
@@ -104,6 +114,17 @@ export default function ArticlesPage() {
           onSaved={handleSaved}
         />
       )}
+
+      <DeleteConfirmModal
+        isOpen={deleteModalOpen}
+        itemName={articleToDelete?.tema || ""}
+        itemType="article"
+        onConfirm={handleDelete}
+        onCancel={() => {
+          setDeleteModalOpen(false);
+          setArticleToDelete(null);
+        }}
+      />
 
       <section className="table-wrapper" aria-label="Articles list">
         <table>
@@ -152,7 +173,7 @@ export default function ArticlesPage() {
                         Edit
                       </button>
                       <button
-                        onClick={() => handleDelete(article.id)}
+                        onClick={() => openDeleteModal(article)}
                         className="btn btn-danger px-2 py-1 text-xs"
                       >
                         Delete
