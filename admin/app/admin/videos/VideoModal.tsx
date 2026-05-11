@@ -92,7 +92,7 @@ export default function VideoModal({ video, onClose, onSaved }: Props) {
             placeholder="Content"
             value={form.conteudo}
             onChange={handleChange}
-            rows={4}
+            rows={10}
             className="input resize-none"
           />
           <input
