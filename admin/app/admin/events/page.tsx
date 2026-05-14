@@ -1,11 +1,10 @@
 "use client";
 
 import { useEffect, useState, useCallback, useMemo } from "react";
-import { supabase } from "@/lib/supabase";
 import EventModal from "./event-modal";
 import DeleteConfirmModal from "../components/delete-confirm-modal";
 import { FaLongArrowAltDown, FaLongArrowAltUp } from "react-icons/fa";
-import type { Event, SortField, SortOrder } from "@/app/types";
+import type { Event, SortField, SortOrder } from "@/app/types/types";
 
 export default function EventsPage() {
   const [events, setEvents] = useState<Event[]>([]);
@@ -26,9 +25,17 @@ export default function EventsPage() {
 
   const fetchEvents = useCallback(async () => {
     setLoading(true);
-    const { data } = await supabase.from("eventos").select("*");
-    setEvents(data ?? []);
-    setLoading(false);
+    try {
+      const response = await fetch("/api/events");
+      if (!response.ok) throw new Error("Failed to fetch events");
+      const data = await response.json();
+      setEvents(data ?? []);
+    } catch (error) {
+      console.error("Error fetching events:", error);
+      setEvents([]);
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
   useEffect(() => {
@@ -77,10 +84,24 @@ export default function EventsPage() {
 
   async function handleDelete() {
     if (!eventToDelete) return;
-    await supabase.from("eventos").delete().eq("id", eventToDelete.id);
-    setDeleteModalOpen(false);
-    setEventToDelete(null);
-    fetchEvents();
+
+    try {
+      const response = await fetch(`/api/events/${eventToDelete.id}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || "Failed to delete event");
+      }
+
+      setDeleteModalOpen(false);
+      setEventToDelete(null);
+      fetchEvents();
+    } catch (error) {
+      console.error("Error deleting event:", error);
+      alert(error instanceof Error ? error.message : "Failed to delete event");
+    }
   }
 
   function handleSaved() {

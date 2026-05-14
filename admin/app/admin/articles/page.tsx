@@ -1,11 +1,10 @@
 "use client";
 
 import { useEffect, useState, useCallback, useMemo } from "react";
-import { supabase } from "@/lib/supabase";
 import ArticleModal from "./article-modal";
 import DeleteConfirmModal from "../components/delete-confirm-modal";
 import { FaLongArrowAltDown, FaLongArrowAltUp } from "react-icons/fa";
-import type { Article, ArticleWithDates, SortOrder } from "@/app/types";
+import type { Article, ArticleWithDates, SortOrder } from "@/app/types/types";
 
 export default function ArticlesPage() {
   const [articles, setArticles] = useState<ArticleWithDates[]>([]);
@@ -26,9 +25,17 @@ export default function ArticlesPage() {
 
   const fetchArticles = useCallback(async () => {
     setLoading(true);
-    const { data } = await supabase.from("artigos").select("*");
-    setArticles(data ?? []);
-    setLoading(false);
+    try {
+      const response = await fetch("/api/articles");
+      if (!response.ok) throw new Error("Failed to fetch articles");
+      const data = await response.json();
+      setArticles(data ?? []);
+    } catch (error) {
+      console.error("Error fetching articles:", error);
+      setArticles([]);
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
   useEffect(() => {
@@ -65,10 +72,26 @@ export default function ArticlesPage() {
 
   async function handleDelete() {
     if (!articleToDelete) return;
-    await supabase.from("artigos").delete().eq("id", articleToDelete.id);
-    setDeleteModalOpen(false);
-    setArticleToDelete(null);
-    fetchArticles();
+
+    try {
+      const response = await fetch(`/api/articles/${articleToDelete.id}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || "Failed to delete article");
+      }
+
+      setDeleteModalOpen(false);
+      setArticleToDelete(null);
+      fetchArticles();
+    } catch (error) {
+      console.error("Error deleting article:", error);
+      alert(
+        error instanceof Error ? error.message : "Failed to delete article",
+      );
+    }
   }
 
   function handleSaved() {

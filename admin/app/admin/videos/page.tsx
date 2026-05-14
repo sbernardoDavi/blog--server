@@ -1,11 +1,10 @@
 "use client";
 
 import { useEffect, useState, useCallback, useMemo } from "react";
-import { supabase } from "@/lib/supabase";
 import VideoModal from "./video-modal";
 import DeleteConfirmModal from "../components/delete-confirm-modal";
 import { FaLongArrowAltDown, FaLongArrowAltUp } from "react-icons/fa";
-import type { Video, VideoWithDates, SortOrder } from "@/app/types";
+import type { Video, VideoWithDates, SortOrder } from "@/app/types/types";
 
 export default function VideosPage() {
   const [videos, setVideos] = useState<VideoWithDates[]>([]);
@@ -27,9 +26,17 @@ export default function VideosPage() {
 
   const fetchVideos = useCallback(async () => {
     setLoading(true);
-    const { data } = await supabase.from("videos").select("*");
-    setVideos(data ?? []);
-    setLoading(false);
+    try {
+      const response = await fetch("/api/videos");
+      if (!response.ok) throw new Error("Failed to fetch videos");
+      const data = await response.json();
+      setVideos(data ?? []);
+    } catch (error) {
+      console.error("Error fetching videos:", error);
+      setVideos([]);
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
   useEffect(() => {
@@ -69,10 +76,24 @@ export default function VideosPage() {
 
   async function handleDelete() {
     if (!videoToDelete) return;
-    await supabase.from("videos").delete().eq("id", videoToDelete.id);
-    setDeleteModalOpen(false);
-    setVideoToDelete(null);
-    fetchVideos();
+
+    try {
+      const response = await fetch(`/api/videos/${videoToDelete.id}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || "Failed to delete video");
+      }
+
+      setDeleteModalOpen(false);
+      setVideoToDelete(null);
+      fetchVideos();
+    } catch (error) {
+      console.error("Error deleting video:", error);
+      alert(error instanceof Error ? error.message : "Failed to delete video");
+    }
   }
 
   function handleSaved() {

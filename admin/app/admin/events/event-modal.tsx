@@ -1,8 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { supabase } from "@/lib/supabase";
-import type { Event, EventModalProps } from "@/app/types";
+import type { Event, EventModalProps } from "@/app/types/types";
 
 const empty: Event = {
   title: "",
@@ -37,21 +36,25 @@ export default function EventModal({
     setLoading(true);
     setError("");
 
-    const { id, ...data } = form;
-    const query = id
-      ? supabase
-          .from("eventos")
-          .update({ ...data, updated_at: new Date().toISOString() })
-          .eq("id", id)
-      : supabase.from("eventos").insert(data);
+    try {
+      const url = form.id ? `/api/events/${form.id}` : "/api/events";
+      const method = form.id ? "PUT" : "POST";
 
-    const { error } = await query;
+      const response = await fetch(url, {
+        method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
 
-    if (error) {
-      setError(error.message);
-      setLoading(false);
-    } else {
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || "Error saving event");
+      }
+
       onSaved();
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Error saving");
+      setLoading(false);
     }
   }
 

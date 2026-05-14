@@ -2,7 +2,7 @@
 
 import { useRef, useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
-import type { Article, ArticleModalProps } from "@/app/types";
+import type { Article, ArticleModalProps } from "@/app/types/types";
 
 const empty: Article = { tema: "", autor: "", resumo: "", pdf_url: "" };
 
@@ -47,17 +47,27 @@ export default function ArticleModal({
     e.preventDefault();
     setLoading(true);
     setError("");
+
     try {
-      const pdf_url = await uploadPdf();
-      const { id, ...data } = { ...form, pdf_url };
-      const query = id
-        ? supabase
-            .from("artigos")
-            .update({ ...data, updated_at: new Date().toISOString() })
-            .eq("id", id)
-        : supabase.from("artigos").insert(data);
-      const { error } = await query;
-      if (error) throw error;
+      const url = form.id ? `/api/articles/${form.id}` : "/api/articles";
+      const method = form.id ? "PUT" : "POST";
+
+      const response = await fetch(url, {
+        method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          tema: form.tema,
+          autor: form.autor,
+          resumo: form.resumo,
+          pdf_url: await uploadPdf(),
+        }),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || "Error saving article");
+      }
+
       onSaved();
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "Error saving");
