@@ -8,9 +8,9 @@ import { useTheme } from "@/lib/useTheme";
 import "./Navbar.css";
 
 const NAV_LINKS = [
-  { href: "/admin/articles", label: "Articles" },
-  { href: "/admin/events", label: "Events" },
-  { href: "/admin/videos", label: "Videos" },
+  { href: "/pages/articles", label: "Articles" },
+  { href: "/pages/events", label: "Events" },
+  { href: "/pages/videos", label: "Videos" },
 ];
 
 export default function Navbar() {

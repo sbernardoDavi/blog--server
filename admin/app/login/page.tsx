@@ -28,7 +28,8 @@ export default function LoginPage() {
       setError(error.message);
       setLoading(false);
     } else {
-      router.push("/admin/articles");
+      setLoading(false);
+      router.push("/pages/articles");
     }
   }
 

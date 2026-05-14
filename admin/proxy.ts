@@ -10,17 +10,17 @@ export function proxy(request: NextRequest) {
       (cookie.name.includes("sb-") && cookie.name.includes("-auth")),
   );
 
-  if (!hasAuthCookie && pathname.startsWith("/admin")) {
+  if (!hasAuthCookie && pathname.startsWith("/pages")) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
   if (hasAuthCookie && pathname === "/login") {
-    return NextResponse.redirect(new URL("/admin/articles", request.url));
+    return NextResponse.redirect(new URL("/pages/articles", request.url));
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/admin/:path*", "/login"],
+  matcher: ["/pages/:path*", "/login"],
 };
